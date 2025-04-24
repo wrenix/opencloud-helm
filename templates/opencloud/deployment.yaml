@@ -122,7 +122,7 @@ spec:
               type: RuntimeDefault
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/bin/sh"]
-          args: ["-c", "opencloud init || true; opencloud server"]
+          args: ["-c", "opencloud init --diff || true; opencloud server"]
           {{- with .Values.opencloud.envFrom }}
           envFrom:
             {{- toYaml . | nindent 12 }}
@@ -244,6 +244,8 @@ spec:
               value: "0.0.0.0"
             - name: NATS_NATS_PORT
               value: "9233"
+            - name: "IDM_LDAPS_ADDR"
+              value: ":9235"
             # CSP configuration
             - name: PROXY_CSP_CONFIG_FILE_LOCATION
               value: "/etc/opencloud/csp.yaml"
